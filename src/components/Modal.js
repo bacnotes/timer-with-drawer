@@ -1,8 +1,9 @@
-import React from "react";
-
+import { useSelector } from "react-redux";
 const Modal = () => {
-  let isModalOpen = true;
+  console.log(useSelector((state) => state))
+  const isModalOpen = useSelector((state) => state.toggleReducer.isModalOpen);
   let hidden = isModalOpen ? "" : "hidden";
+  console.log('modal',isModalOpen)
   return (
     <div
       aria-hidden='true'
