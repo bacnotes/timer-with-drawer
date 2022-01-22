@@ -1,9 +1,13 @@
 import { useSelector } from "react-redux";
+import { getRandom, draw } from "../utils";
+import dummyData from "../dummyData.json";
 const Modal = () => {
-  console.log(useSelector((state) => state))
   const isModalOpen = useSelector((state) => state.toggleReducer.isModalOpen);
   let hidden = isModalOpen ? "" : "hidden";
-  console.log('modal',isModalOpen)
+
+  // draw 1 person
+  const data = dummyData.results;
+  const { fullName, image } = draw(data, getRandom);
   return (
     <div
       aria-hidden='true'
@@ -12,12 +16,12 @@ const Modal = () => {
         <h2 className='text-lg'>抽獎結果</h2>
         <img
           className='object-cover w-auto rounded-full mx-auto animate-bounce'
-          src='https://fakeimg.pl/200x200/d1d1d1/'
+          src={image || "https://fakeimg.pl/200x200/d1d1d1/"}
           alt='user'
           aria-describedby='user'
         />
         <h3 className='text-center bg-teal-500 text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white rounded p-1'>
-          Name
+          {fullName}
         </h3>
       </div>
     </div>
