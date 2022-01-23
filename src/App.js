@@ -1,4 +1,4 @@
-import './App.css';
+import './App.css'; 
 import Timer from './components/Timer'
 import Draw from "./components/Draw";
 import Modal from "./components/Modal";
