@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import toggleReducer from "./store/modal/modalSlice"
+import toggleModalReducer from "./store/modal/modalSlice";
+import startTimerReducer from "./store/Timer/timerSlice";
 
 export const store = configureStore({
   reducer: {
-    toggleReducer,
+    toggleModalReducer,
+    startTimerReducer,
   },
 });

@@ -2,7 +2,9 @@ import { useSelector } from "react-redux";
 import { getRandom, draw } from "../utils";
 import dummyData from "../dummyData.json";
 const Modal = () => {
-  const isModalOpen = useSelector((state) => state.toggleReducer.isModalOpen);
+  const isModalOpen = useSelector(
+    (state) => state.toggleModalReducer.isModalOpen
+  );
   let hidden = isModalOpen ? "" : "hidden";
 
   // draw 1 person

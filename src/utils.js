@@ -18,4 +18,12 @@ export const draw = (arrayList, fn) => {
   const fullName = `${name.first} ${name.last}`;
   return { fullName, image };
 };
+
+export const formatTime = (time) => {
+  let min = parseInt(time / 60);
+  if (min < 10) min = `0${min}`;
+  let sec = time % 60;
+  if (sec < 10) sec = `0${sec}`;
+  return { min, sec };
+};
   

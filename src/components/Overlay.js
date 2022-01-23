@@ -3,7 +3,9 @@ import { toggleModal } from "../store/modal/modalSlice";
 
 const Overlay = () => {
   const dispatch = useDispatch();
-  const isModalOpen = useSelector((state) => state.toggleReducer.isModalOpen);
+  const isModalOpen = useSelector(
+    (state) => state.toggleModalReducer.isModalOpen
+  );
 
   let hidden = isModalOpen ? "" : "hidden";
   return (
