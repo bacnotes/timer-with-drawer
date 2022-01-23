@@ -3,18 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 export const timerSlice = createSlice({
   name: "timer",
   initialState: {
-    isCountdown: true,
-    time: 2,
+    isCountdown: false,
+    time: 1,
   },
   reducers: {
-    startTimer: (state, action) => {
-      state.startTimerReducer.isCountdown =
-        !state.startTimerReducer.isCountdown;
-      state.time = action.payload
+    toggleTimer: (state) => {
+      state.isCountdown =
+        !state.isCountdown;
     },
   },
 });
 
-export const { startTimer } = timerSlice.actions;
+export const { toggleTimer } = timerSlice.actions;
 
 export default timerSlice.reducer;

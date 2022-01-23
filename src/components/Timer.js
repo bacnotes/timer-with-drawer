@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Toast, formatTime} from "./../utils";
+import { useSelector, useDispatch } from "react-redux";
+import { Toast, formatTime } from "./../utils";
+import { toggleModal } from "./../store/modal/modalSlice";
+import { toggleTimer } from "./../store/timer/timerSlice";
 
 const Timer = () => {
-  // 倒數計時狀態 倒數設定時間
-  const { isCountdown, time } = useSelector((state) => state.startTimerReducer);
-  console.log(isCountdown, time);
-  // 設定倒數時間
+  const dispatch = useDispatch();
+  // 預設倒數狀態跟時間
+  const { isCountdown, time } = useSelector(
+    (state) => state.toggleTimerReducer
+  );
+  // 表單更改倒數時間
   const [minute, setMinute] = useState(time);
-  // 倒數狀態
-  const [startTimer, setStartTimer] = useState(false);
+  // 更新倒數狀態與時間
+  const [startTimer, setStartTimer] = useState(isCountdown);
   const [countdownTime, setCountdownTime] = useState(minute * 60);
-
+  const { min, sec } = formatTime(countdownTime);
   // 可輸入數值範圍
   if (minute > 120 || minute < 1 || !minute) {
     Toast.fire({
@@ -20,25 +24,27 @@ const Timer = () => {
     });
   }
 
-  // 沒有倒數時 分鐘連動畫面
+  // 沒有倒數時 表單連動畫面
   const timeChangeHandler = (e) => {
-    setMinute(e.target.value);
+    const newMinute = e.target.value;
+    setMinute(newMinute);
+    setCountdownTime(newMinute * 60);
   };
-  
-  const { min, sec } = formatTime(countdownTime);
+
+  // 倒數更新秒數
   useEffect(() => {
-    if (countdownTime > 0) {
+    if (countdownTime > 0 && startTimer) {
       setTimeout(() => {
-        console.log("startTime, ", countdownTime);
         setCountdownTime((prev) => prev - 1);
       }, 1000);
     }
 
     if (countdownTime === 0 && startTimer) {
-      console.log("done");
       setStartTimer(false);
+      dispatch(toggleTimer());
+      dispatch(toggleModal());
     }
-  }, [countdownTime, startTimer]);
+  }, [countdownTime, startTimer, dispatch]);
 
   return (
     <section className='flex flex-col m-3 p-10 items-center gap-5 md:w-2/3 lg:w-4/5  bg-indigo-100 opacity-90 rounded font-semibold'>
@@ -56,23 +62,27 @@ const Timer = () => {
         />
         <span>分鐘</span>
         <button
+          onClick={() => {
+            dispatch(toggleTimer());
+            setStartTimer(true);
+          }}
           disabled={isCountdown}
           type='button'
           className='bg-teal-500 hover:bg-teal-700 disabled:bg-slate-500 text-white font-bold py-2 px-4 rounded'>
           倒數開始
         </button>
       </div>
-      <div className='mt-1 text-8xl flex'>
+      <div className='mt-1 h-20 text-8xl outline-1 relative'>
         {!isCountdown ? (
-          <span className='text-sky-500'>{minute}</span>
+          <span className='text-sky-500 absolute right-10'>{minute}</span>
         ) : (
-          <span className='text-sky-500'>{min}</span>
+          <span className='text-sky-500 absolute right-10'>{min}</span>
         )}
-        <span className='text-sky-600'>:</span>
-        <span className='text-sky-500'>{sec}</span>
+        <span className='text-sky-600 absolute -left-3 -top-2'>:</span>
+        <span className='text-sky-500 absolute left-8'>{sec}</span>
       </div>
     </section>
   );
-};;
+};
 
 export default Timer;
