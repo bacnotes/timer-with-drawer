@@ -16,13 +16,8 @@ const Timer = () => {
   const [startTimer, setStartTimer] = useState(isCountdown);
   const [countdownTime, setCountdownTime] = useState(minute * 60);
   const { min, sec } = formatTime(countdownTime);
-  // 可輸入數值範圍
-  if (minute > 120 || minute < 1 || !minute) {
-    Toast.fire({
-      icon: "warning",
-      title: "時間範圍為1~120分鐘",
-    });
-  }
+  
+  
 
   // 沒有倒數時 表單連動畫面
   const timeChangeHandler = (e) => {
@@ -33,6 +28,14 @@ const Timer = () => {
 
   // 倒數更新秒數
   useEffect(() => {
+    // 可輸入數值範圍
+    if (minute > 120 || minute < 1 || !minute) {
+      Toast.fire({
+        icon: "warning",
+        title: "時間範圍為1~120分鐘",
+      });
+       return
+    }
     if (countdownTime > 0 && startTimer) {
       setTimeout(() => {
         setCountdownTime((prev) => prev - 1);
@@ -44,7 +47,7 @@ const Timer = () => {
       dispatch(toggleTimer());
       dispatch(toggleModal());
     }
-  }, [countdownTime, startTimer, dispatch]);
+  }, [countdownTime, startTimer]);
 
   return (
     <section className='flex flex-col m-3 p-10 items-center gap-5 md:w-2/3 lg:w-4/5  bg-indigo-100 opacity-90 rounded font-semibold'>
@@ -66,10 +69,10 @@ const Timer = () => {
             dispatch(toggleTimer());
             setStartTimer(true);
           }}
-          disabled={isCountdown}
+          disabled={isCountdown || minute > 120 || minute < 1 || !minute}
           type='button'
           className='bg-teal-500 hover:bg-teal-700 disabled:bg-slate-500 text-white font-bold py-2 px-4 rounded'>
-          倒數開始
+          {isCountdown? '倒數中' :'開始'}
         </button>
       </div>
       <div className='mt-1 h-20 text-8xl outline-1 relative'>
