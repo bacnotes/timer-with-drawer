@@ -17,13 +17,17 @@ const Timer = () => {
   const [countdownTime, setCountdownTime] = useState(minute * 60);
   const { min, sec } = formatTime(countdownTime);
 
+  // 設定時間
+  const setTime = (minute) => {
+    setMinute(minute);
+    setCountdownTime(minute * 60);
+  };
+
   // 沒有倒數時 表單連動畫面
   const timeChangeHandler = (e) => {
     const newMinute = Number(e.target.value);
-    console.log(newMinute);
     if (Number.isNaN(newMinute)) return
-    setMinute(newMinute);
-    setCountdownTime(newMinute * 60);
+    setTime(newMinute)
   };
 
   // 限制數字
@@ -58,6 +62,7 @@ const Timer = () => {
       setStartTimer(false);
       dispatch(toggleTimer());
       dispatch(toggleModal());
+      setTime(1)
     }
   }, [countdownTime, startTimer]);
 
