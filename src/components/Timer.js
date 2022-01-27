@@ -26,8 +26,8 @@ const Timer = () => {
   // 沒有倒數時 表單連動畫面
   const timeChangeHandler = (e) => {
     const newMinute = Number(e.target.value);
-    if (Number.isNaN(newMinute)) return
-    setTime(newMinute)
+    if (Number.isNaN(newMinute)) return;
+    setTime(newMinute);
   };
 
   // 限制數字
@@ -62,7 +62,7 @@ const Timer = () => {
       setStartTimer(false);
       dispatch(toggleTimer());
       dispatch(toggleModal());
-      setTime(1)
+      setTime(1);
     }
   }, [countdownTime, startTimer]);
 
@@ -71,7 +71,7 @@ const Timer = () => {
       <h2 className='text-lg'>抽獎時間</h2>
       <div className='flex items-center gap-5'>
         <input
-          placeholder='1'
+          value={minute}
           disabled={isCountdown}
           onKeyUp={onlyNumber}
           onChange={!isCountdown ? timeChangeHandler : null}

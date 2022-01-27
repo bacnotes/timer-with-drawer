@@ -1,15 +1,29 @@
+import { useState, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { getRandom, draw } from "../utils";
 import dummyData from "../dummyData.json";
 const Modal = () => {
+  // 預設空白名單
+  const [person, setPerson] = useState({
+    fullName: "",
+    image: "",
+  });
+
   const isModalOpen = useSelector(
     (state) => state.toggleModalReducer.isModalOpen
   );
   let hidden = isModalOpen ? "" : "hidden";
+  console.log('before layout',person)//
+  // draw 1 person 
+  useLayoutEffect(() => {
+    if (isModalOpen) {
+      const data = dummyData.results;
+      const drawData = draw(data, getRandom);
+      setPerson(drawData);
+      console.log('inlayout',person);
+    }
+  }, [isModalOpen]);
 
-  // draw 1 person
-  const data = dummyData.results;
-  const { fullName, image } = draw(data, getRandom);
   return (
     <div
       aria-hidden='true'
@@ -18,14 +32,15 @@ const Modal = () => {
         <h2 className='text-lg'>抽獎結果</h2>
         <img
           className='object-cover w-auto rounded-full mx-auto animate-bounce'
-          src={image || "https://fakeimg.pl/200x200/d1d1d1/"}
+          src={person.image || "https://fakeimg.pl/200x200/d1d1d1/"}
           alt='user'
           aria-describedby='user'
         />
         <h3 className='text-center bg-teal-500 text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white rounded p-1'>
-          {fullName}
+          {person.fullName}
         </h3>
       </div>
+      {console.log("render", person)}
     </div>
   );
 };
