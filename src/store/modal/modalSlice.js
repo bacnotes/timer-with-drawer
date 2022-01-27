@@ -4,10 +4,12 @@ export const modalSlice = createSlice({
   name: "modal",
   initialState: {
     isModalOpen: false,
+    user:{}
   },
   reducers: {
-    toggleModal: (state) => {
+    toggleModal: (state, action) => {
       state.isModalOpen = !state.isModalOpen;
+      state.user = action.payload
     },
   },
 });

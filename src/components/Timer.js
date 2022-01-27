@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Toast, formatTime } from "./../utils";
+import { Toast, formatTime, getRandom, draw } from "./../utils";
 import { toggleModal } from "./../store/modal/modalSlice";
 import { toggleTimer } from "./../store/timer/timerSlice";
+import dummyData from "../dummyData.json";
+
+// 一開始就先抽籤
+const data = dummyData.results;
+const drawData = draw(data, getRandom);
 
 const Timer = () => {
   const dispatch = useDispatch();
@@ -10,6 +15,7 @@ const Timer = () => {
   const { isCountdown, time } = useSelector(
     (state) => state.toggleTimerReducer
   );
+
   // 表單更改倒數時間
   const [minute, setMinute] = useState(time);
   // 更新倒數狀態與時間
@@ -61,7 +67,7 @@ const Timer = () => {
     if (countdownTime === 0 && startTimer) {
       setStartTimer(false);
       dispatch(toggleTimer());
-      dispatch(toggleModal());
+      dispatch(toggleModal(drawData));
       setTime(1);
     }
   }, [countdownTime, startTimer]);

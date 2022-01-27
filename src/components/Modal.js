@@ -1,27 +1,12 @@
-import { useState, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
-import { getRandom, draw } from "../utils";
-import dummyData from "../dummyData.json";
 const Modal = () => {
-  // 預設空白名單
-  const [person, setPerson] = useState({
-    fullName: "",
-    image: "",
-  });
-
   const isModalOpen = useSelector(
     (state) => state.toggleModalReducer.isModalOpen
   );
+  const person = useSelector(
+    (state) => state.toggleModalReducer.user
+  );
   let hidden = isModalOpen ? "" : "hidden";
-  // draw 1 person
-  useLayoutEffect(() => {
-    // 打開時出現抽獎資料
-    if (isModalOpen) {
-      const data = dummyData.results;
-      const drawData = draw(data, getRandom);
-      setPerson(drawData);
-    }
-  }, [isModalOpen]);
 
   return (
     <div
@@ -39,7 +24,6 @@ const Modal = () => {
           {person.fullName}
         </h3>
       </div>
-      {console.log("modal")}
     </div>
   );
 };
