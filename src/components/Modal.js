@@ -13,14 +13,13 @@ const Modal = () => {
     (state) => state.toggleModalReducer.isModalOpen
   );
   let hidden = isModalOpen ? "" : "hidden";
-  console.log('before layout',person)//
-  // draw 1 person 
+  // draw 1 person
   useLayoutEffect(() => {
+    // 打開時出現抽獎資料
     if (isModalOpen) {
       const data = dummyData.results;
       const drawData = draw(data, getRandom);
       setPerson(drawData);
-      console.log('inlayout',person);
     }
   }, [isModalOpen]);
 
@@ -40,7 +39,7 @@ const Modal = () => {
           {person.fullName}
         </h3>
       </div>
-      {console.log("render", person)}
+      {console.log("modal")}
     </div>
   );
 };

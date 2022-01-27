@@ -12,9 +12,7 @@ export const getRandom = (num) => {
 };
 
 export const draw = (arrayList, fn) => {
-  console.log(arrayList, fn)
   const index = fn(arrayList.length);
-  console.log(index, arrayList[index])
   const { name, picture } = arrayList[index];
   const image = picture.large;
   const fullName = `${name.first} ${name.last}`;
