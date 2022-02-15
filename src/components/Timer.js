@@ -7,9 +7,9 @@ import dummyData from "../dummyData.json";
 
 // 一開始就先抽籤
 const data = dummyData.results;
-const drawData = draw(data, getRandom);
-
 const Timer = () => {
+  
+  console.log()
   const dispatch = useDispatch();
   // 預設倒數狀態跟時間
   const { isCountdown, time } = useSelector(
@@ -66,6 +66,7 @@ const Timer = () => {
 
     if (countdownTime === 0 && startTimer) {
       setStartTimer(false);
+      const drawData = draw(data, getRandom);
       dispatch(toggleTimer());
       dispatch(toggleModal(drawData));
       setTime(1);
