@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/timer-with-drawer/static/css/main.34cd8366.css",
-    "main.js": "/timer-with-drawer/static/js/main.fdf888b4.js",
+    "main.js": "/timer-with-drawer/static/js/main.8031fc23.js",
     "index.html": "/timer-with-drawer/index.html",
     "main.34cd8366.css.map": "/timer-with-drawer/static/css/main.34cd8366.css.map",
-    "main.fdf888b4.js.map": "/timer-with-drawer/static/js/main.fdf888b4.js.map"
+    "main.8031fc23.js.map": "/timer-with-drawer/static/js/main.8031fc23.js.map"
   },
   "entrypoints": [
     "static/css/main.34cd8366.css",
-    "static/js/main.fdf888b4.js"
+    "static/js/main.8031fc23.js"
   ]
 }
