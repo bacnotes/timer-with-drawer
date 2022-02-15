@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/timer-with-drawer/static/css/main.34cd8366.css",
+    "main.js": "/timer-with-drawer/static/js/main.c46667ea.js",
+    "index.html": "/timer-with-drawer/index.html",
+    "main.34cd8366.css.map": "/timer-with-drawer/static/css/main.34cd8366.css.map",
+    "main.c46667ea.js.map": "/timer-with-drawer/static/js/main.c46667ea.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.34cd8366.css",
+    "static/js/main.c46667ea.js"
+  ]
+}
