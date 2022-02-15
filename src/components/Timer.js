@@ -5,11 +5,8 @@ import { toggleModal } from "./../store/modal/modalSlice";
 import { toggleTimer } from "./../store/timer/timerSlice";
 import dummyData from "../dummyData.json";
 
-// 一開始就先抽籤
 const data = dummyData.results;
 const Timer = () => {
-  
-  console.log()
   const dispatch = useDispatch();
   // 預設倒數狀態跟時間
   const { isCountdown, time } = useSelector(

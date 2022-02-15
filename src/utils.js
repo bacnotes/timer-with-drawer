@@ -8,7 +8,8 @@ export const Toast = Swal.mixin({
 });
 
 export const getRandom = (num) => {
-  return Math.floor(Math.random() * num) + 1;
+  console.log(Math.floor(Math.random() * num));
+  return Math.floor(Math.random() * num);
 };
 
 export const draw = (arrayList, fn) => {
