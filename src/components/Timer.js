@@ -45,10 +45,13 @@ const Timer = () => {
     e.target.value = e.target.value.replace(/[^\d]/g, "");
   };
 
+  // 輸入範圍
+  const outOfRange = minute > 120 || minute < 1 || !minute ? true : false;
+
   // 倒數更新秒數
   useEffect(() => {
     // 可輸入數值範圍
-    if (minute > 120 || minute < 1 || !minute) {
+    if (outOfRange) {
       Toast.fire({
         icon: "warning",
         title: "時間範圍為1~120分鐘",
@@ -92,7 +95,7 @@ const Timer = () => {
             dispatch(toggleTimer());
             setStartTimer(true);
           }}
-          disabled={isCountdown || minute > 120 || minute < 1 || !minute}
+          disabled={isCountdown || outOfRange}
           type='button'
           className='bg-teal-500 hover:bg-teal-700 disabled:bg-slate-500 text-white font-bold py-2 px-4 rounded'>
           {isCountdown ? "倒數中" : "開始"}
