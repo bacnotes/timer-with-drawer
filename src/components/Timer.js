@@ -90,7 +90,6 @@ const Timer = () => {
           stopCountDown={StopCountDownHandler}
         />
       )}
-      {console.log("timer")}
     </section>
   );
 };

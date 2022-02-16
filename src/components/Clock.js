@@ -32,7 +32,6 @@ const Clock = (props) => {
       <span className='text-sky-500 absolute right-0'>{min}</span>
       <span className='text-sky-600 absolute left-2 -top-2'>:</span>
       <span className='text-sky-500 absolute left-8'>{sec}</span>
-      {console.log("clock")}
     </div>
   );
 };
