@@ -1,39 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Toast, formatTime, getRandom, draw } from "./../utils";
-import { toggleModal } from "./../store/modal/modalSlice";
+import { Toast } from "./../utils";
 import { toggleTimer } from "./../store/timer/timerSlice";
-import dummyData from "../dummyData.json";
+import Clock from "./Clock";
 
-const data = dummyData.results;
 const Timer = () => {
   const dispatch = useDispatch();
-  // 預設倒數狀態跟時間
+  // 指定範圍，調整直接修改這邊即可
+  const minValue = 1;
+  const maxValue = 120;
+
+  // 預設倒數狀態不開啟 時間預設1分鐘
   const { isCountdown, time } = useSelector(
     (state) => state.toggleTimerReducer
   );
-
-  // 表單更改倒數時間
+  // 管理倒數狀態
   const [minute, setMinute] = useState(time);
-  // 更新倒數狀態與時間
   const [startTimer, setStartTimer] = useState(isCountdown);
-  const [countdownTime, setCountdownTime] = useState(minute * 60);
-  const { min, sec } = formatTime(countdownTime);
 
-  // 設定時間
-  const setTime = (minute) => {
-    setMinute(minute);
-    setCountdownTime(minute * 60);
-  };
+  // 倒數分鐘
 
-  // 沒有倒數時 表單連動畫面
-  const timeChangeHandler = (e) => {
-    const newMinute = Number(e.target.value);
-    if (Number.isNaN(newMinute)) return;
-    setTime(newMinute);
-  };
-
-  // 限制數字
+  // 限制輸入內容為數字 不能為字母
   const onlyNumber = (e) => {
     if (Number.isNaN(e.target.value)) {
       Toast.fire({
@@ -42,51 +29,41 @@ const Timer = () => {
       });
       return;
     }
+    // 刪除數字以外的字母，輸入非數字外的字直接""移除掉
     e.target.value = e.target.value.replace(/[^\d]/g, "");
   };
 
-  // 輸入範圍
-  const outOfRange = minute > 120 || minute < 1 || !minute ? true : false;
+  // 範圍限制
+  const outOfRange =
+    minute < minValue || minute > maxValue || !minute ? true : false;
 
-  // 倒數更新秒數
-  useEffect(() => {
-    // 可輸入數值範圍
-    if (outOfRange) {
-      Toast.fire({
-        icon: "warning",
-        title: "時間範圍為1~120分鐘",
-      });
-      return;
-    }
-    if (countdownTime > 0 && startTimer) {
-      setTimeout(() => {
-        setCountdownTime((prev) => prev - 1);
-      }, 1000);
-    }
-
-    if (countdownTime === 0 && startTimer) {
-      setStartTimer(false);
-      const drawData = draw(data, getRandom);
-      dispatch(toggleTimer());
-      dispatch(toggleModal(drawData));
-      setTime(1);
-    }
-  }, [countdownTime, startTimer]);
+  if (outOfRange) {
+    Toast.fire({
+      icon: "warning",
+      title: `時間範圍為${minValue}~${maxValue}分鐘`,
+    });
+  }
+  const StopCountDownHandler = () => {
+    dispatch(toggleTimer());
+    setStartTimer(false);
+    setMinute(time);
+  };
 
   return (
     <section className='flex flex-col m-3 p-10 items-center gap-5 md:w-2/3 lg:w-4/5  bg-indigo-100 opacity-90 rounded font-semibold'>
       <h2 className='text-lg'>抽獎時間</h2>
       <div className='flex items-center gap-5'>
         <input
-          value={minute}
+          value = {minute}
           disabled={isCountdown}
           onKeyUp={onlyNumber}
-          onChange={!isCountdown ? timeChangeHandler : null}
+          onChange={(e) => setMinute(e.target.value)}
           className='mt-1 block px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
           focus:invalid:border-pink-500 focus:invalid:ring-pink-500'
-          type='text'
-          size='3'
-          maxLength='3'
+          type='number'
+          min={minValue}
+          max={maxValue}
+          placeholder={time}
           required
         />
         <span>分鐘</span>
@@ -101,15 +78,13 @@ const Timer = () => {
           {isCountdown ? "倒數中" : "開始"}
         </button>
       </div>
-      <div className='mt-1 h-20 text-8xl outline-1 relative'>
-        {!isCountdown ? (
-          <span className='text-sky-500 absolute -right-2'>{minute}</span>
-        ) : (
-          <span className='text-sky-500 absolute right-0'>{min}</span>
-        )}
-        <span className='text-sky-600 absolute left-2 -top-2'>:</span>
-        <span className='text-sky-500 absolute left-8'>{sec}</span>
-      </div>
+      {isCountdown && (
+        <Clock
+          countdownSeconds={minute * 60}
+          stopCountDown={StopCountDownHandler}
+        />
+      )}
+      {console.log("timer")}
     </section>
   );
 };
