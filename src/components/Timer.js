@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Toast } from "./../utils";
 import { toggleTimer } from "./../store/timer/timerSlice";
 import Clock from "./Clock";
-import { current } from "@reduxjs/toolkit";
 
 const Timer = () => {
   const dispatch = useDispatch();
@@ -41,7 +40,6 @@ const Timer = () => {
       minute.current.value < minValue || minute.current.value > maxValue || !minute.current.value
         ? true
         : false;
-      console.log(minute.current.value);
     if (outOfRange) {
       Toast.fire({
         icon: "warning",
